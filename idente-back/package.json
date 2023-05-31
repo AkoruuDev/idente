@@ -1,0 +1,11 @@
+{
+  "name": "idente-back",
+  "version": "1.0.0",
+  "description": "Back-end file about iDent plataform",
+  "main": "src/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AkoruuDev",
+  "license": "MIT"
+}
