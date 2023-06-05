@@ -22,10 +22,10 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
-.sign-box {
+.box-log {
     width: 500px;
-    height: 300px;
-    padding: 150px 0;
+    height: auto;
+    padding: 80px 0;
     background-color: #39f8ff;
 
     display: flex;
@@ -34,6 +34,10 @@
     justify-content: space-between;
     border-radius: 35px;
     box-shadow: 0 0 5px #1b5f61;
+}
+
+.title {
+    color: #01023f;
 }
 
 .form {
@@ -48,18 +52,59 @@
 
 .input {
     width: calc(100% - 28px);
-    height: 80px;
+    height: 50px;
     margin: 15px 0;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    position: relative;
+    margin: 5px 0;
+    padding: 15px;
+
     & input {
         width: 100%;
-        height: 100%;
-        border-radius: 15px;
-        padding: 0 14px;
+        height: 40px;
+        border: none;
+        border-bottom: 2px solid #0003b4;
+        border-radius: 0;
+        background-color: transparent;
+        display: inline-block;
+        outline: none;
+        font-size: 16px;
+        transition: all .3s ease-in-out;
+
+        &:focus {
+            border-bottom: 2px solid #01023f;
+        }
+
+        &:focus + label,
+        &:valid + label {
+            font-size: 15px;
+            margin-top: 0;
+            margin-left: 15px;
+            color: #01023f; 
+        }
+    }
+
+    & label {
+        color: #0003b4;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 25px;
+        margin-left: 20px;
+        transition: all .3s ease-in-out;
+    }
+
+    & img {
+        width: 20px;
+        position: absolute;
+        top: 25px;
+        right: 20px;
+        cursor: pointer;
     }
 }
 
@@ -67,4 +112,29 @@
     padding: 18px 45px;
     border-radius: 15px;
     cursor: pointer;
+    transition: all .3s ease-in-out;
+    background-color: #0003b4;
+    color: #39f8ff;
+    border: 4px solid #39f8ff;
+
+    &:hover {
+        background-color: #39f8ff;
+        color: #0003b4;
+        border: 4px solid #0003b4;
+    }
+}
+
+
+
+.span-log {
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-style: italic;
+    color: #0003b4;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        color: #01023f;
+    }
 }
