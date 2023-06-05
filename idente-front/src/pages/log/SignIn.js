@@ -57,32 +57,32 @@ function SignIn () {
 
     return(
         <section className='container'>
-            <div className='sign-box'>
+            <div className='box-log'>
                 <div>
                     <h1 className='title'>Sign In</h1>
                 </div>
                 <form onSubmit={save} className='form'>
-                    <div className='input'>
+                <div className='input'>
+                        <input type="text" id="email" name="email" required
+                            onChange={e => {
+                                getUser(e.target.name, e.target.value)
+                            }}
+                        />
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email"
-                            onChange={e => {
-                                getUser(e.target.name, e.target.value)
-                            }}
-                        />
                     </div>
 
                     <div className='input'>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password"
+                        <input type="password" id="password" name="password" required
                             onChange={e => {
                                 getUser(e.target.name, e.target.value)
                             }}
                         />
+                        <label htmlFor="password">Password</label>
                     </div>
 
-                    <div>
-                        <button type="submit" className='button'>Sign In</button>
-                    </div>
+                    <span onClick={() => navigate('/sign-up')} className="span-log">Ainda não é registrado? Registre-se aqui</span>
+
+                    <button type="submit" className='button'>Sign In</button>
                 </form>
             </div>
         </section>
