@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import httpStatus = require("http-status");
+import httpStatus from "http-status";
 
-function getClient(req: Request, res: Response) {
+function getClients(req: Request, res: Response) {
     res.status(httpStatus.OK).send('Ok')
 };
 
@@ -22,7 +22,7 @@ function deleteClient(req: Request, res: Response) {
 };
 
 export {
-    getClient,
+    getClients,
     getClientById,
     createClient,
     updateClient,
