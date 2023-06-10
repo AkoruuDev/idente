@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model adress {
+  id                                           Int              @id(map: "adress_pk") @default(autoincrement())
+  cep                                          String?
+  street                                       String
+  number                                       String
+  neighborhood                                 String
+  city                                         String
+  country                                      String           @default("Brasil")
+  complement                                   String?
+  client_profile_client_profile_adressToadress client_profile[] @relation("client_profile_adressToadress")
+  units_units_adressToadress                   units[]          @relation("units_adressToadress")
+  users_profile_users_profile_adressToadress   users_profile[]  @relation("users_profile_adressToadress")
+}
+
+model client {
+  id             Int              @id(map: "client_pk") @default(autoincrement())
+  name           String           @db.VarChar(50)
+  sheet          String           @unique @db.VarChar(8)
+  client_phones  client_phones[]
+  client_profile client_profile[]
+}
+
+model client_phones {
+  id      Int    @id(map: "client_phones_pk") @default(autoincrement())
+  number  String
+  user_id Int
+  client  client @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_phones_fk0")
+}
+
+model client_profile {
+  id                                   Int    @id(map: "client_profile_pk") @default(autoincrement())
+  client_id                            Int
+  create_at                            Int
+  update_at                            Int
+  birthday                             Int
+  adress                               Int
+  email                                String @unique
+  client                               client @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_profile_fk0")
+  date_client_profile_create_atTodate  date   @relation("client_profile_create_atTodate", fields: [create_at], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_profile_fk1")
+  date_client_profile_update_atTodate  date   @relation("client_profile_update_atTodate", fields: [update_at], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_profile_fk2")
+  date_client_profile_birthdayTodate   date   @relation("client_profile_birthdayTodate", fields: [birthday], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_profile_fk3")
+  adress_client_profile_adressToadress adress @relation("client_profile_adressToadress", fields: [adress], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client_profile_fk4")
+}
+
+model date {
+  id                                            Int              @id(map: "date_pk") @default(autoincrement())
+  day                                           String
+  month                                         String
+  year                                          String
+  weekday                                       String
+  hour                                          String
+  minute                                        String
+  client_profile_client_profile_create_atTodate client_profile[] @relation("client_profile_create_atTodate")
+  client_profile_client_profile_update_atTodate client_profile[] @relation("client_profile_update_atTodate")
+  client_profile_client_profile_birthdayTodate  client_profile[] @relation("client_profile_birthdayTodate")
+  users_profile_users_profile_birthdayTodate    users_profile[]  @relation("users_profile_birthdayTodate")
+  users_profile_users_profile_create_atTodate   users_profile[]  @relation("users_profile_create_atTodate")
+  users_profile_users_profile_update_atTodate   users_profile[]  @relation("users_profile_update_atTodate")
+}
+
+model session {
+  id      Int    @id(map: "session_pk") @default(autoincrement())
+  user_id Int
+  token   String @unique
+  users   users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "session_fk0")
+}
+
+model units {
+  id                          Int             @id(map: "units_pk") @default(autoincrement())
+  name                        String
+  access                      String
+  adress                      Int
+  adress_units_adressToadress adress          @relation("units_adressToadress", fields: [adress], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "units_fk0")
+  users_profile               users_profile[]
+}
+
+model user_phones {
+  id      Int    @id(map: "user_phones_pk") @default(autoincrement())
+  number  String
+  user_id Int
+  users   users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_phones_fk0")
+}
+
+model users {
+  id            Int             @id(map: "users_pk") @default(autoincrement())
+  name          String          @db.VarChar(50)
+  email         String          @unique
+  password      String
+  session       session[]
+  user_phones   user_phones[]
+  users_profile users_profile[]
+}
+
+model users_profile {
+  id                                  Int     @id(map: "users_profile_pk") @default(autoincrement())
+  user_id                             Int
+  birthday                            Int
+  create_at                           Int
+  update_at                           Int
+  adress                              Int
+  profile                             String  @default("https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg")
+  unit                                Int
+  position                            String?
+  prefix                              String? @default("Dr")
+  users                               users   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk0")
+  date_users_profile_birthdayTodate   date    @relation("users_profile_birthdayTodate", fields: [birthday], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk1")
+  date_users_profile_create_atTodate  date    @relation("users_profile_create_atTodate", fields: [create_at], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk2")
+  date_users_profile_update_atTodate  date    @relation("users_profile_update_atTodate", fields: [update_at], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk3")
+  adress_users_profile_adressToadress adress  @relation("users_profile_adressToadress", fields: [adress], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk4")
+  units                               units   @relation(fields: [unit], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_profile_fk5")
+}
