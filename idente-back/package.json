@@ -4,18 +4,27 @@
   "description": "Back-end file about iDent plataform",
   "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "bild": "tsc",
+    "prebuild": "rm -rf dist",
+    "build": "ttsc -p tsconfig.build.json",
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts",
-    "dbpull": "npx prisma db pull",
-    "generate": "npx prisma generate"
+    "migration:run": "prisma migrate deploy",
+    "migration:generate": "npm run dev:load-envs prisma migrate dev",
+    "dev:load-envs": "cross-env NODE_ENV=development",
+    "dev:migration:run": "npm run dev:load-envs prisma migrate deploy",
+    "dev:migration:generate": "npm run dev:load-envs prisma migrate dev",
+    "dev:seed": "npm run dev:load-envs prisma db seed",
+    "dev": "npm run dev:load-envs nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/server.ts' -e ts"
   },
   "author": "AkoruuDev",
   "license": "MIT",
+  "prisma": {
+    "seed": "npm run dev:load-envs -- ts-node prisma/seed.ts"
+  },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
-    "@types/node": "^20.2.5",
+    "@types/node": "^20.2.6",
     "nodemon": "^2.0.22",
     "prisma": "^4.15.0",
     "ts-node": "^10.9.1",
@@ -23,12 +32,16 @@
   },
   "dependencies": {
     "@prisma/client": "^4.15.0",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dayjs": "^1.11.8",
-    "dotenv": "^16.1.3",
+    "dotenv": "^16.1.4",
     "dotenv-expand": "^10.0.0",
     "express": "^4.18.2",
+    "faker": "^6.6.6",
     "http-status": "^1.6.2",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "tsconfig-paths": "^4.2.0"
   }
 }
