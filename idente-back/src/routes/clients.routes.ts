@@ -3,7 +3,7 @@ import { Router } from "express";
 
 const route = Router();
 
-route.get("/", getClients);
+route.get("/all", getClients);
 route.get("/:id", getClientById);
 route.post("/", createClient);
 route.put("/:id", updateClient);
